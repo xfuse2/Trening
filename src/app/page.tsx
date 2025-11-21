@@ -23,11 +23,11 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('yalla_bina');
 
   const navItems = [
+    { id: 'yalla_bina', label: 'يلا بينا', icon: Rocket },
     { id: 'sop', label: 'SOP', icon: LayoutDashboard },
     { id: 'training', label: 'التدريب', icon: GraduationCap },
     { id: 'moderator_training', label: 'تدريب المودريتور', icon: BrainCircuit },
     { id: 'eval', label: 'التقييم', icon: Award },
-    { id: 'yalla_bina', label: 'يلا بينا', icon: Rocket },
   ];
 
   const renderContent = () => {

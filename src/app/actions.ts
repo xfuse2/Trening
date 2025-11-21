@@ -26,6 +26,10 @@ import {
   type InteractiveRoleplayInput,
   type InteractiveRoleplayOutput,
 } from '@/ai/flows/interactive-roleplay-flow';
+import {
+  analyzeMarket as runAnalyzeMarket
+} from '@/ai/flows/market-analyzer-flow';
+import type { MarketAnalyzerInput, MarketAnalyzerOutput } from '@/ai/flows/market-analyzer-flow.types';
 
 export async function generateTemplate(
   input: GenerateTemplateInput
@@ -68,4 +72,10 @@ export async function interactiveRoleplay(
     }
     
     return response;
+}
+
+export async function analyzeMarket(
+  input: MarketAnalyzerInput
+): Promise<MarketAnalyzerOutput> {
+  return await runAnalyzeMarket(input);
 }

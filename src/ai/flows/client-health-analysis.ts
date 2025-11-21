@@ -43,7 +43,7 @@ Analyze the following client situation:
 - Health Score: {{health}}/10
 - Last Feedback: "{{feedback}}"
 
-Your output must be in professional Arabic and structured as follows:
+Your output must be in professional Egyptian Arabic dialect and structured as follows:
 
 **1. تحليل نفسي موجز لمشاعر العميل:**
 (What is the client *really* worried about? Is it money, results, feeling neglected? Go beyond the surface-level feedback.)

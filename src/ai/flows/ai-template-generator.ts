@@ -45,7 +45,7 @@ Your task is to generate a marketing template of type "{{templateType}}" based o
 "{{context}}"
 
 The generated template must be:
--   Written in professional, high-quality Arabic.
+-   Written in professional, high-quality Egyptian Arabic dialect.
 -   Ready to be copied and used immediately.
 -   Solution-oriented, empathetic, and aligned with XFuse's systematic approach.
 -   Reflect an understanding of the Egyptian market.

@@ -37,20 +37,20 @@ The employee's role is: {{roleTitle}}.
 Their final performance score is: {{finalScore}}/5.
 The score details are: {{scoresDetails}}.
 
-Your task is to write a report in Arabic with two distinct parts, separated by "---".
+Your task is to write a report in Egyptian Arabic dialect with two distinct parts, separated by "---".
 
 **Part 1: Performance Summary**
 -   Start with a positive and encouraging sentence.
--   Summarize the key strengths based on the provided scores (e.g., "Your commitment to deadlines is excellent...").
--   Gently point out the areas for improvement, linking them to specific low scores (e.g., "However, we need to focus more on improving the quality of work to reduce errors...").
+-   Summarize the key strengths based on the provided scores (e.g., "التزامك بمواعيد التسليم ممتاز...").
+-   Gently point out the areas for improvement, linking them to specific low scores (e.g., "لكن، محتاجين نركز أكتر على تحسين جودة الشغل عشان نقلل الأخطاء...").
 -   Conclude with a sentence expressing confidence in their ability to grow.
 
 **Part 2: Proposed SMART Goals**
 -   Propose 3 specific, measurable, achievable, relevant, and time-bound (SMART) goals for the next month.
 -   These goals must directly address the weaknesses identified in Part 1.
--   Example for a Media Buyer with low ROAS: "Increase the ROAS for the 'Brand X' campaign from 2.5 to 3.5 by the end of next month through weekly A/B testing of ad copy."
+-   Example for a Media Buyer with low ROAS: "زيادة الـ ROAS لحملة 'Brand X' من 2.5 لـ 3.5 بنهاية الشهر الجاي من خلال A/B testing أسبوعي للـ ad copy."
 
-Ensure the entire output is in professional Arabic.
+Ensure the entire output is in professional Egyptian Arabic dialect.
 `,
 });
 

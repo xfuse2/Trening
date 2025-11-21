@@ -8,7 +8,8 @@ import {
   Filter, 
   Heart, 
   Copy, 
-  Book
+  Book,
+  Search
 } from 'lucide-react';
 import { PulseDashboard } from './yalla-bina/PulseDashboard';
 import { DashboardWidgets } from './yalla-bina/DashboardWidgets';
@@ -17,15 +18,17 @@ import { LeadsAutomationSection } from './yalla-bina/LeadsAutomationSection';
 import { ClientHealthSection } from './yalla-bina/ClientHealthSection';
 import { TemplateLibrarySection } from './yalla-bina/TemplateLibrarySection';
 import { WikiSection } from './yalla-bina/WikiSection';
+import { MarketAnalyzerSection } from './yalla-bina/MarketAnalyzerSection';
 import { cn } from '@/lib/utils';
 
-type Module = 'dashboard' | 'packages' | 'leads' | 'clients' | 'library' | 'wiki';
+type Module = 'dashboard' | 'packages' | 'leads' | 'clients' | 'library' | 'wiki' | 'market_analyzer';
 
 export function YallaBinaSection() {
   const [activeModule, setActiveModule] = useState<Module>('dashboard');
 
   const navigationItems = [
     { id: 'dashboard', label: 'نبض التسويق', icon: LayoutDashboard },
+    { id: 'market_analyzer', label: 'تحليل السوق (AI)', icon: Search },
     { id: 'packages', label: 'الباكدجات', icon: Package },
     { id: 'leads', label: 'أوتوميشن Leads', icon: Filter },
     { id: 'clients', label: 'صحة العملاء', icon: Heart },
@@ -41,6 +44,7 @@ export function YallaBinaSection() {
           <DashboardWidgets />
         </div>
       );
+      case 'market_analyzer': return <MarketAnalyzerSection />;
       case 'packages': return <PackagesSection />;
       case 'leads': return <LeadsAutomationSection />;
       case 'clients': return <ClientHealthSection />;

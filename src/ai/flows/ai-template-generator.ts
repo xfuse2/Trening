@@ -38,12 +38,19 @@ const prompt = ai.definePrompt({
   name: 'generateTemplatePrompt',
   input: {schema: GenerateTemplateInputSchema},
   output: {schema: GenerateTemplateOutputSchema},
-  prompt: `You are a marketing expert at XFuse agency.
+  prompt: `You are a senior marketing expert at XFuse, a digital solutions agency in Egypt specializing in building integrated marketing systems for SMEs and startups.
+Our brand identity is professional, data-driven, and system-oriented.
 
-You will generate a marketing template of type {{templateType}} based on the following context: {{context}}.
+Your task is to generate a marketing template of type "{{templateType}}" based on the following context:
+"{{context}}"
 
-The template should be ready to copy and use immediately. It should be professional, empathetic, and solution-oriented.
-Use professional Arabic language.
+The generated template must be:
+-   Written in professional, high-quality Arabic.
+-   Ready to be copied and used immediately.
+-   Solution-oriented, empathetic, and aligned with XFuse's systematic approach.
+-   Reflect an understanding of the Egyptian market.
+
+Generate only the template content as the final output.
 `,
 });
 

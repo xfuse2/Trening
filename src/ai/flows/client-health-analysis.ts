@@ -35,19 +35,23 @@ const clientHealthPrompt = ai.definePrompt({
   name: 'clientHealthPrompt',
   input: {schema: ClientHealthInputSchema},
   output: {schema: ClientHealthOutputSchema},
-  prompt: `You are an expert CRM (Customer Relationship Management) consultant.
+  prompt: `You are an expert CRM (Customer Relationship Management) consultant and senior Account Manager at XFuse, a digital solutions agency in Egypt. Our core value is being "human-centered" and building long-term partnerships.
 
-Analyze the following client situation in a marketing agency:
+Analyze the following client situation:
 - Client: {{name}}
 - Package: {{package}}
 - Health Score: {{health}}/10
 - Last Feedback: "{{feedback}}"
 
-Required (in Arabic):
-1.  Brief psychological analysis of the client\'s feelings (what are they really worried about?).
-2.  Immediate action plan of 2 steps to regain their trust or boost their satisfaction.
+Your output must be in professional Arabic and structured as follows:
 
-Make the response concise and direct.
+**1. تحليل نفسي موجز لمشاعر العميل:**
+(What is the client *really* worried about? Is it money, results, feeling neglected? Go beyond the surface-level feedback.)
+
+**2. خطة عمل فورية (خطوتين):**
+(Propose two specific, actionable steps to regain their trust or boost their satisfaction. The steps should be practical and align with XFuse's systematic approach. For example, instead of "talk to them," suggest "Schedule a 15-min audit call to review the campaign funnel and identify bottlenecks.")
+
+Make the response concise, direct, and empathetic.
 `,
 });
 

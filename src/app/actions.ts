@@ -30,6 +30,11 @@ import {
   analyzeMarket as runAnalyzeMarket
 } from '@/ai/flows/market-analyzer-flow';
 import type { MarketAnalyzerInput, MarketAnalyzerOutput } from '@/ai/flows/market-analyzer-flow.types';
+import {
+  suggestPackage as runSuggestPackage,
+} from '@/ai/flows/package-suggestion-flow';
+import type { PackageSuggestionInput, PackageSuggestionOutput } from '@/ai/flows/package-suggestion-flow.types';
+
 
 export async function generateTemplate(
   input: GenerateTemplateInput
@@ -78,4 +83,10 @@ export async function analyzeMarket(
   input: MarketAnalyzerInput
 ): Promise<MarketAnalyzerOutput> {
   return await runAnalyzeMarket(input);
+}
+
+export async function suggestPackage(
+  input: PackageSuggestionInput
+): Promise<PackageSuggestionOutput> {
+  return await runSuggestPackage(input);
 }

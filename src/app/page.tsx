@@ -6,18 +6,16 @@ import {
   GraduationCap,
   Award,
   Rocket,
-  BrainCircuit,
 } from 'lucide-react';
 import { SOPCard } from '@/components/SOPCard';
 import { TrainingSection } from '@/components/TrainingSection';
 import { EvaluationCalculator } from '@/components/EvaluationCalculator';
 import { YallaBinaSection } from '@/components/yalla-bina/YallaBinaSection';
-import { ModeratorTraining } from '@/components/ModeratorTraining';
 import { Logo } from '@/components/Logo';
 import { rolesData } from '@/lib/data';
 import { cn } from '@/lib/utils';
 
-type ActiveTab = 'sop' | 'training' | 'eval' | 'yalla_bina' | 'moderator_training';
+type ActiveTab = 'sop' | 'training' | 'eval' | 'yalla_bina';
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('yalla_bina');
@@ -26,7 +24,6 @@ export default function HomePage() {
     { id: 'yalla_bina', label: 'يلا بينا', icon: Rocket },
     { id: 'sop', label: 'SOP', icon: LayoutDashboard },
     { id: 'training', label: 'التدريب', icon: GraduationCap },
-    { id: 'moderator_training', label: 'تدريب المودريتور', icon: BrainCircuit },
     { id: 'eval', label: 'التقييم', icon: Award },
   ];
 
@@ -54,8 +51,6 @@ export default function HomePage() {
             <TrainingSection />
            </div>
         );
-      case 'moderator_training':
-        return <ModeratorTraining />;
       case 'eval':
         return (
           <div className="max-w-6xl mx-auto animate-fade-in">

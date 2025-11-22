@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Bot, Loader2, PlayCircle, Send, Award, RefreshCw } from 'lucide-react';
+import { Bot, Loader2, PlayCircle, Send, Award, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { interactiveRoleplay } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,6 +25,7 @@ export function RoleplayDojo() {
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [rating, setRating] = useState<'good' | 'bad' | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scenarios = [
@@ -45,6 +46,7 @@ export function RoleplayDojo() {
     setHistory([]);
     setFeedback(null);
     setUserInput('');
+    setRating(null);
   };
 
   const startSimulation = async () => {
@@ -76,6 +78,7 @@ export function RoleplayDojo() {
     setUserInput('');
     setIsLoading(true);
     setFeedback(null);
+    setRating(null);
 
     const selectedScenario = scenarios.find(s => s.id === scenarioType)!;
     
@@ -98,6 +101,13 @@ export function RoleplayDojo() {
       setIsLoading(false);
     }
   };
+  
+  const handleRating = (newRating: 'good' | 'bad') => {
+    setRating(newRating);
+    // Here you would typically send this feedback to your backend/analytics
+    console.log(`Feedback rated as: ${newRating}`);
+  };
+
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mt-6">
@@ -159,6 +169,28 @@ export function RoleplayDojo() {
                  <div className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
                    {feedback}
                  </div>
+                 <div className="mt-4 pt-3 border-t border-yellow-200 flex items-center justify-between">
+                    <p className="text-xs font-bold text-yellow-900">هل كان هذا التقييم مفيداً؟</p>
+                    <div className="flex gap-2">
+                        <Button
+                            size="icon"
+                            variant={rating === 'good' ? 'default' : 'outline'}
+                            onClick={() => handleRating('good')}
+                            className={`h-8 w-8 transition-all ${rating === 'good' ? 'bg-green-500 hover:bg-green-600' : 'bg-white'}`}
+                        >
+                            <ThumbsUp size={16} />
+                        </Button>
+                        <Button
+                            size="icon"
+                            variant={rating === 'bad' ? 'default' : 'outline'}
+                            onClick={() => handleRating('bad')}
+                            className={`h-8 w-8 transition-all ${rating === 'bad' ? 'bg-red-500 hover:bg-red-600' : 'bg-white'}`}
+                        >
+                            <ThumbsDown size={16} />
+                        </Button>
+                    </div>
+                 </div>
+                 {rating && <p className="text-center text-xs text-yellow-800 mt-2">شكراً لتقييمك!</p>}
                </div>
             )}
           </div>

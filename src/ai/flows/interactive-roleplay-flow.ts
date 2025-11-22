@@ -11,6 +11,11 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
+const AiAndFeedbackSchema = z.object({
+    aiResponse: z.string().describe('The AI response to the user message.'),
+    feedback: z.string().optional().describe('The feedback on the user message.'),
+});
+
 const InteractiveRoleplayInputSchema = z.object({
   scenario: z
     .string()
@@ -40,7 +45,7 @@ const interactiveRoleplayPrompt = ai.definePrompt({
     schema: InteractiveRoleplayInputSchema,
   },
   output: {
-    schema: InteractiveRoleplayOutputSchema,
+    schema: AiAndFeedbackSchema,
   },
   prompt: `You are a role-playing AI coach for XFuse, a digital agency in Egypt. Your goal is to simulate realistic client interactions to train marketing team members. You must act as the client described in the scenario.
 
@@ -60,18 +65,18 @@ This is the conversation history so far:
 {{/each}}
 {{/if}}
 
+Your Task (in professional Egyptian Arabic dialect):
+
 {{#if userMessage}}
 The employee just sent this message:
 "{{{userMessage}}}"
 
-Your Task (in professional Egyptian Arabic dialect):
 1.  **AI Response**: As the client, provide a realistic and engaging response to the employee's message. Stay in character based on the scenario.
 2.  **Feedback**: As the AI Coach, provide constructive feedback on the employee's message. The feedback should be structured in two parts:
     *   **نقاط القوة:** (What did the employee do well? e.g., "استخدام لهجة هادئة، إظهار التعاطف").
     *   **نقاط للتحسين:** (What could be improved? Be specific. e.g., "كان من الأفضل اقتراح خطوة تالية واضحة بدلًا من ترك المحادثة مفتوحة").
     The feedback should help the employee align with XFuse's professional and solution-oriented values.
 {{else}}
-Your Task (in professional Egyptian Arabic dialect):
 **AI Response**: Start the conversation by acting as the client based on the scenario. Make your opening statement challenging but realistic. **DO NOT** provide any feedback.
 {{/if}}
 `,

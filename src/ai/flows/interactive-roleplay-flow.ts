@@ -72,7 +72,7 @@ Your Task (in professional Egyptian Arabic dialect):
     The feedback should help the employee align with XFuse's professional and solution-oriented values.
 {{else}}
 Your Task (in professional Egyptian Arabic dialect):
-**AI Response**: Start the conversation by acting as the client based on the scenario. Make your opening statement challenging but realistic.
+**AI Response**: Start the conversation by acting as the client based on the scenario. Make your opening statement challenging but realistic. **DO NOT** provide any feedback.
 {{/if}}
 `,
   config: {

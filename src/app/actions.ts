@@ -34,6 +34,10 @@ import {
   suggestPackage as runSuggestPackage,
 } from '@/ai/flows/package-suggestion-flow';
 import type { PackageSuggestionInput, PackageSuggestionOutput } from '@/ai/flows/package-suggestion-flow.types';
+import {
+  evaluateRoleplayPerformance as runEvaluateRoleplayPerformance,
+} from '@/ai/flows/roleplay-evaluation-flow';
+import type { RoleplayEvaluationInput, RoleplayEvaluationOutput } from '@/ai/flows/roleplay-evaluation-flow.types';
 
 
 export async function generateTemplate(
@@ -89,4 +93,10 @@ export async function suggestPackage(
   input: PackageSuggestionInput
 ): Promise<PackageSuggestionOutput> {
   return await runSuggestPackage(input);
+}
+
+export async function evaluateRoleplayPerformance(
+  input: RoleplayEvaluationInput
+): Promise<RoleplayEvaluationOutput> {
+  return await runEvaluateRoleplayPerformance(input);
 }

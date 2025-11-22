@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Bot, Loader2, PlayCircle, Send, Award, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { interactiveRoleplay } from '@/app/actions';
+import { Bot, Loader2, PlayCircle, Send, Award, RefreshCw, ThumbsUp, ThumbsDown, GraduationCap } from 'lucide-react';
+import { interactiveRoleplay, evaluateRoleplayPerformance } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 
 type Message = {
   role: 'user' | 'ai';
@@ -26,6 +25,9 @@ export function RoleplayDojo() {
   const [isLoading, setIsLoading] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [rating, setRating] = useState<'good' | 'bad' | null>(null);
+  const [isFinished, setIsFinished] = useState(false);
+  const [evaluation, setEvaluation] = useState<string | null>(null);
+  const [evaluating, setEvaluating] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scenarios = [
@@ -38,7 +40,7 @@ export function RoleplayDojo() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, feedback]);
+  }, [messages, feedback, evaluation]);
 
   const handleReset = () => {
     setIsStarted(false);
@@ -47,6 +49,8 @@ export function RoleplayDojo() {
     setFeedback(null);
     setUserInput('');
     setRating(null);
+    setIsFinished(false);
+    setEvaluation(null);
   };
 
   const startSimulation = async () => {
@@ -108,6 +112,26 @@ export function RoleplayDojo() {
     console.log(`Feedback rated as: ${newRating}`);
   };
 
+  const handleFinishAndEvaluate = async () => {
+    setIsFinished(true);
+    setEvaluating(true);
+    setFeedback(null);
+    const selectedScenario = scenarios.find(s => s.id === scenarioType)!;
+
+    try {
+        const result = await evaluateRoleplayPerformance({
+            scenario: selectedScenario.prompt,
+            history: history,
+        });
+        setEvaluation(result.evaluation);
+    } catch (error) {
+        console.error("Evaluation Error:", error);
+        setEvaluation("حدث خطأ أثناء تقييم الأداء.");
+    } finally {
+        setEvaluating(false);
+    }
+};
+
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mt-6">
@@ -153,7 +177,7 @@ export function RoleplayDojo() {
                 </div>
               </div>
             ))}
-            {isLoading && (
+            {isLoading && !isFinished && (
               <div className="flex justify-start">
                 <div className="bg-white border border-gray-200 p-3 rounded-xl rounded-bl-none shadow-sm flex items-center gap-2 text-gray-500 text-sm">
                   <Loader2 className="animate-spin" size={16} /> جاري الكتابة...
@@ -161,7 +185,7 @@ export function RoleplayDojo() {
               </div>
             )}
             
-            {feedback && (
+            {feedback && !isFinished && (
                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-5 mt-6 animate-fade-in">
                  <h4 className="font-bold text-yellow-800 mb-2 flex items-center gap-2">
                    <Award size={20} /> تقييم المدرب الذكي
@@ -193,30 +217,67 @@ export function RoleplayDojo() {
                  {rating && <p className="text-center text-xs text-yellow-800 mt-2">شكراً لتقييمك!</p>}
                </div>
             )}
+
+            {evaluating && (
+                <div className="flex justify-center items-center flex-col p-8 text-gray-500">
+                    <Loader2 className="animate-spin h-10 w-10 text-primary mb-4" />
+                    <p className="font-bold">جاري تحليل وتقييم الأداء النهائي...</p>
+                </div>
+            )}
+            {evaluation && (
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mt-6 animate-fade-in">
+                    <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
+                        <GraduationCap size={20} /> تقييم الأداء النهائي
+                    </h4>
+                    <div className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed prose prose-sm">
+                        {evaluation.split('---').map((part, index) => (
+                            <div key={index} className="mb-4">
+                                {part.trim().split('\n').map((line, lineIndex) => {
+                                    if (line.startsWith('**') && line.endsWith('**')) {
+                                        return <strong key={lineIndex} className="block my-2">{line.replaceAll('**', '')}</strong>
+                                    }
+                                     if (line.startsWith('*')) {
+                                        return <li key={lineIndex} className="ms-4">{line.substring(1).trim()}</li>
+                                    }
+                                    return <p key={lineIndex}>{line}</p>
+                                })}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
           </div>
 
-          <div className="p-4 bg-white border-t border-gray-200">
-            <div className="flex gap-2">
-              <Input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                placeholder="اكتب ردك هنا..."
-                disabled={isLoading}
-                className="flex-1 border-gray-300 focus:ring-primary"
-              />
-              <Button onClick={sendMessage} disabled={isLoading || !userInput} className="bg-primary text-primary-foreground hover:bg-primary/90 p-3 h-auto">
-                <Send size={20} />
-              </Button>
-               <Button onClick={handleReset} variant="outline" className="p-3 h-auto">
-                <RefreshCw size={20} />
-              </Button>
+          {!isFinished ? (
+            <div className="p-4 bg-white border-t border-gray-200">
+                <div className="flex gap-2">
+                <Input
+                    type="text"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                    placeholder="اكتب ردك هنا..."
+                    disabled={isLoading}
+                    className="flex-1 border-gray-300 focus:ring-primary"
+                />
+                <Button onClick={sendMessage} disabled={isLoading || !userInput} className="bg-primary text-primary-foreground hover:bg-primary/90 p-3 h-auto">
+                    <Send size={20} />
+                </Button>
+                <Button onClick={handleFinishAndEvaluate} variant="destructive" className="p-3 h-auto">
+                    <GraduationCap size={20} /> إنهاء وتقييم
+                </Button>
+                </div>
+                <div className="text-center mt-2">
+                <span className="text-xs text-gray-400">تحدث بمهنية وكأنك في موقف حقيقي. اضغط <RefreshCw className="inline-block h-3 w-3"/> لبدء سيناريو جديد.</span>
+                </div>
             </div>
-            <div className="text-center mt-2">
-               <span className="text-xs text-gray-400">تحدث بمهنية وكأنك في موقف حقيقي. اضغط <RefreshCw className="inline-block h-3 w-3"/> لبدء سيناريو جديد.</span>
-            </div>
-          </div>
+          ) : (
+             <div className="p-4 bg-white border-t border-gray-200">
+                <Button onClick={handleReset} className="w-full">
+                    <RefreshCw size={16} /> ابدأ تدريب جديد
+                </Button>
+             </div>
+          )}
         </div>
       )}
     </div>

@@ -8,3 +8,4 @@ import '@/ai/flows/performance-evaluation-ai-report.ts';
 import '@/ai/flows/interactive-roleplay-flow.ts';
 import '@/ai/flows/market-analyzer-flow.ts';
 import '@/ai/flows/package-suggestion-flow.ts';
+import '@/ai/flows/roleplay-evaluation-flow.ts';

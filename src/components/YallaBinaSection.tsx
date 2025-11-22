@@ -1,15 +1,16 @@
 "use client";
 
 import React, { useState } from 'react';
-import { 
-  Rocket, 
-  LayoutDashboard, 
-  Package, 
-  Filter, 
-  Heart, 
-  Copy, 
+import {
+  Rocket,
+  LayoutDashboard,
+  Package,
+  Filter,
+  Heart,
+  Copy,
   Book,
-  Search
+  Search,
+  Calendar
 } from 'lucide-react';
 import { PulseDashboard } from './yalla-bina/PulseDashboard';
 import { DashboardWidgets } from './yalla-bina/DashboardWidgets';
@@ -19,9 +20,10 @@ import { ClientHealthSection } from './yalla-bina/ClientHealthSection';
 import { TemplateLibrarySection } from './yalla-bina/TemplateLibrarySection';
 import { WikiSection } from './yalla-bina/WikiSection';
 import { MarketAnalyzerSection } from './yalla-bina/MarketAnalyzerSection';
+import { ContentCalendarSection } from './yalla-bina/ContentCalendarSection';
 import { cn } from '@/lib/utils';
 
-type Module = 'dashboard' | 'packages' | 'leads' | 'clients' | 'library' | 'wiki' | 'market_analyzer';
+type Module = 'dashboard' | 'packages' | 'leads' | 'clients' | 'library' | 'wiki' | 'market_analyzer' | 'content_calendar';
 
 export function YallaBinaSection() {
   const [activeModule, setActiveModule] = useState<Module>('dashboard');
@@ -29,6 +31,7 @@ export function YallaBinaSection() {
   const navigationItems = [
     { id: 'dashboard', label: 'نبض التسويق', icon: LayoutDashboard },
     { id: 'market_analyzer', label: 'تحليل السوق (AI)', icon: Search },
+    { id: 'content_calendar', label: 'خطة المحتوى (AI)', icon: Calendar },
     { id: 'packages', label: 'الباكدجات', icon: Package },
     { id: 'leads', label: 'أوتوميشن Leads', icon: Filter },
     { id: 'clients', label: 'صحة العملاء', icon: Heart },
@@ -45,6 +48,7 @@ export function YallaBinaSection() {
         </div>
       );
       case 'market_analyzer': return <MarketAnalyzerSection />;
+      case 'content_calendar': return <ContentCalendarSection />;
       case 'packages': return <PackagesSection />;
       case 'leads': return <LeadsAutomationSection />;
       case 'clients': return <ClientHealthSection />;

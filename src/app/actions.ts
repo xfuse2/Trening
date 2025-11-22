@@ -38,6 +38,11 @@ import {
   evaluateRoleplayPerformance as runEvaluateRoleplayPerformance,
 } from '@/ai/flows/roleplay-evaluation-flow';
 import type { RoleplayEvaluationInput, RoleplayEvaluationOutput } from '@/ai/flows/roleplay-evaluation-flow.types';
+import {
+  generateContentCalendar as runGenerateContentCalendar,
+  type ContentCalendarInput,
+  type ContentCalendarOutput,
+} from '@/ai/flows/content-calendar-flow';
 
 
 export async function generateTemplate(
@@ -99,4 +104,10 @@ export async function evaluateRoleplayPerformance(
   input: RoleplayEvaluationInput
 ): Promise<RoleplayEvaluationOutput> {
   return await runEvaluateRoleplayPerformance(input);
+}
+
+export async function generateContentCalendar(
+  input: ContentCalendarInput
+): Promise<ContentCalendarOutput> {
+  return await runGenerateContentCalendar(input);
 }

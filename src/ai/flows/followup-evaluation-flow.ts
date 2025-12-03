@@ -12,10 +12,6 @@ import {
     type FollowupEvaluationOutput
 } from './followup-evaluation-flow.types';
 
-export async function evaluateFollowupPerformance(input: FollowupEvaluationInput): Promise<FollowupEvaluationOutput> {
-  return evaluateFollowupPerformanceFlow(input);
-}
-
 const evaluationPrompt = ai.definePrompt({
   name: 'followupEvaluationPrompt',
   input: {
@@ -80,3 +76,7 @@ const evaluateFollowupFlow = ai.defineFlow(
     return { evaluation: output.evaluation };
   }
 );
+
+export async function evaluateFollowupPerformance(input: FollowupEvaluationInput): Promise<FollowupEvaluationOutput> {
+  return evaluateFollowupPerformanceFlow(input);
+}

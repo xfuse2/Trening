@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Rocket, BookOpen, PlayCircle, Users, GraduationCap } from 'lucide-react';
 import { rolesData } from '@/lib/data';
 import { RoleplayDojo } from './RoleplayDojo';
+import { FollowupDojo } from './FollowupDojo';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -118,7 +119,12 @@ export function TrainingSection() {
           </div>
         )}
 
-        {activePhase === 'start' && <RoleplayDojo />}
+        {activePhase === 'start' && (
+          <div className="space-y-6">
+            <RoleplayDojo />
+            <FollowupDojo />
+          </div>
+        )}
       </div>
     </div>
   );

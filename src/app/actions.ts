@@ -43,6 +43,15 @@ import {
   type ContentCalendarInput,
   type ContentCalendarOutput,
 } from '@/ai/flows/content-calendar-flow';
+import {
+  followupRoleplay as runFollowupRoleplay,
+  type FollowupRoleplayInput,
+  type FollowupRoleplayOutput,
+} from '@/ai/flows/followup-roleplay-flow';
+import {
+  evaluateFollowupPerformance as runEvaluateFollowupPerformance,
+} from '@/ai/flows/followup-evaluation-flow';
+import type { FollowupEvaluationInput, FollowupEvaluationOutput } from '@/ai/flows/followup-evaluation-flow.types';
 
 
 export async function generateTemplate(
@@ -110,4 +119,26 @@ export async function generateContentCalendar(
   input: ContentCalendarInput
 ): Promise<ContentCalendarOutput> {
   return await runGenerateContentCalendar(input);
+}
+
+export async function followupRoleplay(
+  input: FollowupRoleplayInput
+): Promise<FollowupRoleplayOutput> {
+    const response = await runFollowupRoleplay(input);
+
+    // Same pattern as interactiveRoleplay - no feedback on conversation start
+    if (!input.userMessage) {
+        return {
+            ...response,
+            feedback: undefined,
+        };
+    }
+
+    return response;
+}
+
+export async function evaluateFollowupPerformance(
+  input: FollowupEvaluationInput
+): Promise<FollowupEvaluationOutput> {
+  return await runEvaluateFollowupPerformance(input);
 }

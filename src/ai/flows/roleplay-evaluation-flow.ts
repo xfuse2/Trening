@@ -15,10 +15,6 @@ import {
 } from './roleplay-evaluation-flow.types';
 
 
-export async function evaluateRoleplayPerformance(input: RoleplayEvaluationInput): Promise<RoleplayEvaluationOutput> {
-  return evaluateRoleplayPerformanceFlow(input);
-}
-
 const evaluationPrompt = ai.definePrompt({
   name: 'roleplayEvaluationPrompt',
   input: {
@@ -77,3 +73,7 @@ const evaluateRoleplayPerformanceFlow = ai.defineFlow(
     return { evaluation: output.evaluation };
   }
 );
+
+export async function evaluateRoleplayPerformance(input: RoleplayEvaluationInput): Promise<RoleplayEvaluationOutput> {
+  return evaluateRoleplayPerformanceFlow(input);
+}
